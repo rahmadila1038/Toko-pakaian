@@ -1,0 +1,47 @@
+<div class="container mt-3">
+  <div class="row">
+      <div class="col-md-8">
+          <h2> List Pakaian</h2>
+          <a href="/pakaian/tambah" class="btn btn-primary mb-2">Tambah Data </a>
+          <% if (msg.length !== 0) { %>
+              <div class="alert alert-success" role="alert"><%= msg %> </div>
+          <% } %>
+          <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Kode</th>
+                  <th scope="col">Nama</th>
+                  <th scope="col">Harga</th>
+                  <th scope="col">Stok</th>
+                  <th scope="col">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <% if (pakaian.length === 0) { %>
+                      <tr>
+                          <td colspan="4">
+                              <div class="alert alert-danger fw-bold" role="alert">
+                                  Data masih kosong.
+                                </div>
+                          </td>
+                      </tr>
+                  <% } %>
+                  <% pakaian.forEach((pakaian, i) => { i++%>
+                      <tr>
+                          <th scope="row"><%= i++ %> </th>
+                          <td><%= pakaian.kode %> </td>
+                          <td><%= pakaian.nama %> </td>
+                          <td><%= pakaian.harga %> </td>
+                          <td><%= pakaian.stok %> </td>
+                          <td>
+                              <a href="/pakaian/<%= pakaian.nama %> " class="btn btn-success badge rounded-pill"><i class="bi bi-info-circle"></i> detail</a>
+                          </td>
+                        </tr>
+                  <% }) %>
+                
+              </tbody>
+            </table>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Form Tambah Data Pakaian</h2>
+            <% if (typeof errors != 'undefined') { %>
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        <% errors.forEach(error => { %>
+                         <li><%= error.msg %> </li>
+                        <% }) %>
+                    </ul>
+                  </div>
+            <% } %>
+            <form method="POST" action="/pakaian">
+              <div class="mb-3">
+                <label for="kode" class="form-label">Kode</label>
+                <input type="text" class="form-control" id="kode" name="kode" required>
+              </div>
+                <div class="mb-3">
+                  <label for="nama" class="form-label">Nama</label>
+                  <input type="text" class="form-control" id="nama" name="nama" required>
+                </div>
+                <div class="mb-3">
+                  <label for="harga" class="form-label">Harga</label>
+                  <input type="number" class="form-control" id="harga" name="harga" required>
+                </div>
+                <div class="mb-3">
+                  <label for="stok" class="form-label">Stok</label>
+                  <input type="text" class="form-control" id="stok" name="stok" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Tambah Data</button>
+              </form>
+        </div>
+    </div>
+</div>  
