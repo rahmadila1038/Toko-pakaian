@@ -11,7 +11,7 @@
                     </ul>
                   </div>
             <% } %>
-            <form method="POST" action="/pakaian?_method=PUT">
+            <form method="POST" action="/pakaian/:page?_method=PUT">
               <input type="hidden" name="_id" value="<%= pakaian._id %>"/>
               <input type="hidden" name="oldKode" value="<%= pakaian.oldKode || pakaian.kode %>">
               <div class="mb-3">

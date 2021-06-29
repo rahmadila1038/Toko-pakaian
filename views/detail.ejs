@@ -5,7 +5,7 @@
             <% if (!pakaian) { %>
                 <div class="alert alert-danger fw-bold" role="alert">
                     Data Kosong. <br> 
-                    <a href="/pakaian" class="alert-link fw-normal">&laquo; kembali ke daftar pakaian</a>
+                    <a href="/pakaian/:page" class="alert-link fw-normal">&laquo; kembali ke daftar pakaian</a>
                   </div>
             <% } else { %>
             <div class="card" style="width: 18rem;">
@@ -14,13 +14,13 @@
                   <h5 class="card-title">Nama :<%= pakaian.nama %></h5>
                   <p class="card-text">Harga :<%= pakaian.harga %></p>
                   <p class="card-text">Stok :<%= pakaian.stok %></p>
-                  <a href="/pakaian/edit/<%= pakaian.nama %>" class="btn btn-info badge">Ubah</a>
-                  <!-- <a href="/pakaian/delete/<%= pakaian.nama %>" class="btn btn-danger badge" onclick="return confirm('Apakah anda yakin');">Hapus</a> -->
-                  <form action="/pakaian?_method=DELETE" method="POST" class="d-inline">
+                  <a href="/pakaian/edit/:page/<%= pakaian.kode %>" class="btn btn-info badge">Ubah</a>
+            
+                  <form action="/pakaian/:page?_method=DELETE" method="POST" class="d-inline">
                     <input type="hidden" name="kode" value="<%= pakaian.kode %>"/>
                     <button type="submit" class="btn btn-danger badge" onclick="return confirm('Apakah anda yakin');">Hapus</button>
                   </form>
-                  <a href="/pakaian" class="card-link d-block mt-2">&laquo; Kembali ke daftar pakaian</a>
+                  <a href="/pakaian/:page" class="card-link d-block mt-2">&laquo; Kembali ke daftar pakaian</a>
                 </div>
               </div>
             <% } %> 

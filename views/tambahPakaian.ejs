@@ -6,12 +6,12 @@
                 <div class="alert alert-danger" role="alert">
                     <ul>
                         <% errors.forEach(error => { %>
-                         <li><%= error.msg %> </li>
+                         <li><%= error.msg %> </li> 
                         <% }) %>
                     </ul>
                   </div>
             <% } %>
-            <form method="POST" action="/pakaian">
+            <form method="POST" action="/pakaian/:page">
               <div class="mb-3">
                 <label for="kode" class="form-label">Kode</label>
                 <input type="text" class="form-control" id="kode" name="kode" required>

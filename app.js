@@ -18,8 +18,8 @@ const port = 3000;
 
 app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
-app.use(expressLayouts); //Third Party middleware
-app.use(express.static('public')); //Built in middleware
+app.use(expressLayouts); 
+app.use(express.static('public')); 
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser('secret'));
 app.use(
@@ -44,17 +44,30 @@ app.get('/about', (req, res) => {
     layout:'layouts/main-layout'});
   });
 
-  app.get('/pakaian', async (req, res) => {
-    const pakaian = await Pakaian.find();
+  app.get('/pakaian/:page',  (req, res, next) => {
+    var perPage = 5
+    var page = req.params.page || 1
+
+    Pakaian
+        .find({})
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
+        .exec(function(err,pakaians) {
+            Pakaian.count().exec(function(err, count) {
+                if (err) return next(err)
     res.render('pakaian', {
-       title:'Pakaian',
+      title:'Pakaian',
       layout:'layouts/main-layout',
-      pakaian,
-       msg: req.flash('msg'),
+      pakaians:pakaians,
+      current: page,
+      pages: Math.ceil(count / perPage),
+      msg: req.flash('msg'),
+    })
+  })
 });
   });
 //form tambah data
-  app.get('/pakaian/tambah', (req, res) => {
+  app.get('/pakaian/tambah/:page', (req, res) => {
     res.render('tambahPakaian', {
       title: 'Form Tambah Data Pakaian',
       layout: 'layouts/main-layout',
@@ -62,7 +75,7 @@ app.get('/about', (req, res) => {
   });
 
 //simpan data
-app.post('/pakaian', [
+app.post('/pakaian/:page', [
   body('kode').custom(async (value) => {
     const duplikat = await Pakaian.findOne({kode : value});
     if(duplikat) {
@@ -82,14 +95,14 @@ app.post('/pakaian', [
     Pakaian.insertMany(req.body, (error, Result) => {
       //kirimkan flash message
       req.flash('msg', 'Data berhasil ditambahkan!');
-      res.redirect('/pakaian');
+      res.redirect('/pakaian/:page');
     })
   }
 });
 
 //detail
-app.get('/pakaian/:nama', async (req, res) => {
-  const pakaian = await Pakaian.findOne({nama: req.params.nama});
+app.get('/pakaian/:page/:kode', async (req, res) => {
+  const pakaian = await Pakaian.findOne({kode: req.params.kode});
 
   res.render('detail', {
     title: 'Halaman Detail',
@@ -99,16 +112,16 @@ app.get('/pakaian/:nama', async (req, res) => {
 });
 
 //hapus
-app.delete('/pakaian', (req, res) => {
+app.delete('/pakaian/:page', (req, res) => {
   Pakaian.deleteOne({kode: req.body.kode}).then((Result) => {
     req.flash('msg', 'Data Pakaian berhasil dihapus!');
-    res.redirect('/pakaian')
+    res.redirect('/pakaian/:page')
   });
 });
 
 //form ubah data contact
-app.get('/pakaian/edit/:nama', async (req, res) => {
-  const pakaian = await Pakaian.findOne({ nama: req.params.nama});
+app.get('/pakaian/edit/:page/:kode', async (req, res) => {
+  const pakaian = await Pakaian.findOne({ kode: req.params.kode});
   res.render('ubahPakaian', {
     title: 'Form Ubah Data Pakaian',
     layout: 'layouts/main-layout',
@@ -117,7 +130,7 @@ app.get('/pakaian/edit/:nama', async (req, res) => {
 });
 
 // ubah data
-app.put('/pakaian', [
+app.put('/pakaian/:page', [
   body('kode').custom(async (value, {req}) => {
     const duplikat = await Pakaian.findOne({kode: value});
     if( value !== req.body.oldKode && duplikat) {
@@ -148,10 +161,12 @@ app.put('/pakaian', [
       }).then((result) => {
         //kirimkan flash message
         req.flash('msg', 'Data Pakaian berhasil diubah!');
-        res.redirect('/pakaian');
+        res.redirect('/pakaian/:page');
     });
   }
 });
+
+
 
 app.listen(port, () => {
   console.log(`app listening at http://localhost:${port}`)
