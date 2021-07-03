@@ -10,7 +10,7 @@ const flash = require('connect-flash');
 
 require('./utils/db');
 const Pakaian = require('./models/pakaian');
-const { findOne } = require('./models/pakaian');
+const { findOne, count } = require('./models/pakaian');
 
 
 const app = express();
@@ -35,15 +35,15 @@ app.use(flash());
 app.get('/', (req, res) => {
   res.render('index',{
     title:'Home',
-   layout:'layouts/main-layout'});
- });
-
-app.get('/about', (req, res) => {
-  res.render('about',{
-     title:'About',
     layout:'layouts/main-layout'});
   });
 
+app.get('/about', (req, res) => {
+  res.render('about',{
+    title:'About',
+    layout:'layouts/main-layout'});
+  });
+//tabel
   app.get('/pakaian/:page',  (req, res, next) => {
     var perPage = 5
     var page = req.params.page || 1
@@ -155,6 +155,7 @@ app.put('/pakaian/:page', [
         $set: {
           kode: req.body.kode,
           nama: req.body.nama,
+          nama: req.body.kategori,
           harga: req.body.harga,
           stok: req.body.stok
         },

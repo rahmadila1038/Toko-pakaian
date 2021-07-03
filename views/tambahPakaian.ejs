@@ -6,30 +6,38 @@
                 <div class="alert alert-danger" role="alert">
                     <ul>
                         <% errors.forEach(error => { %>
-                         <li><%= error.msg %> </li> 
+                          <li><%= error.msg %> </li> 
                         <% }) %>
                     </ul>
                   </div>
             <% } %>
             <form method="POST" action="/pakaian/:page">
               <div class="mb-3">
-                <label for="kode" class="form-label">Kode</label>
-                <input type="text" class="form-control" id="kode" name="kode" required>
+                <div class="input-group input-group-merge input-group-alternative">
+                <input type="text" class="form-control" placeholder="kode" id="kode" name="kode" required>
+              </div>
+            </div>
+                <div class="mb-3">
+                  <div class="input-group input-group-merge input-group-alternative">
+                  <input type="text" class="form-control"  placeholder="nama" id="nama" name="nama" required>
+                </div>
               </div>
                 <div class="mb-3">
-                  <label for="nama" class="form-label">Nama</label>
-                  <input type="text" class="form-control" id="nama" name="nama" required>
+                  <div class="input-group input-group-merge input-group-alternative">
+                  <input type="text" class="form-control" placeholder="kategori" id="kategori" name="kategori" required>
                 </div>
+              </div>
                 <div class="mb-3">
-                  <label for="harga" class="form-label">Harga</label>
-                  <input type="number" class="form-control" id="harga" name="harga" required>
+                  <div class="input-group input-group-merge input-group-alternative">
+                  <input type="number" class="form-control" placeholder="harga" id="harga" name="harga" required>
                 </div>
-                <div class="mb-3">
-                  <label for="stok" class="form-label">Stok</label>
-                  <input type="text" class="form-control" id="stok" name="stok" required>
                 </div>
-                
-                <button type="submit" class="btn btn-primary">Tambah Data</button>
+                <div class=" mb-3">
+                  <div class="input-group input-group-merge input-group-alternative">
+                  <input type="number" placeholder="stok" class="form-control" id="stok" name="stok" required>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-secondary">Tambah Data</button>
               </form>
         </div>
     </div>

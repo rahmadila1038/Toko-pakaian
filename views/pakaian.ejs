@@ -1,77 +1,126 @@
+
+<div class="row">
+    <div class=" col-md-9">
+        <div class="card card-stats">
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <div class="container mt-3">
-  <div class="row">
-      <div class="col-md-8">
-          <h2> List Pakaian</h2>
-          <a href="/pakaian/tambah/:page" class="btn btn-primary mb-2">Tambah Data </a>
-          <% if (msg.length !== 0) { %>
-              <div class="alert alert-success" role="alert"><%= msg %> </div>
-          <% } %>
-          <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Kode</th>
-                  <th scope="col">Nama</th>
-                  <th scope="col">Harga</th>
-                  <th scope="col">Stok</th>
-                  <th scope="col">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                  <% if (pakaians.length === 0) { %>
-                      <tr>
-                          <td colspan="4">
-                              <div class="alert alert-danger fw-bold" role="alert">
-                                  Data masih kosong.
+    <div class="row">
+        <div class="col-md-8">
+            <h2> List Pakaian</h2>
+            <a href="/pakaian/tambah/:page" class="btn btn-primary mb-2">Tambah Data </a>
+            <% if (msg.length !== 0) { %>
+            <div class="alert alert-success" role="alert"><%= msg %> </div>
+            <% } %>
+            <div id="filters" class="text-right">
+                <select name="fetchval" id="fetchval">
+                    <option value="" disabled="" selected="">select filter</option>
+                    <option>dress</option>
+                    <option>outer</option>
+                    <option>skirt</option>
+                    <option>shirt</option>
+                    <option>tunic</option>
+                </select>
+            </div>
+            <script>
+                var MongoClient = require('mongodb').MongoClient;
+                var url = "mongodb+srv://rahmadila:KmIqaduJyHAtREpe@cluster0.vegi4.mongodb.net/Toko'";
+
+                MongoClient.connect(url, function(err, db) {
+                    if (err) throw err;
+                    var dbo = db.db("Toko");
+  //Find the first document in the customers collection:
+                if(fetchval===dress){
+                    dbo.collection("pakaians").findOne({},{ projection: { kategori:"dress" } }).toArray(function(err, result) {
+                    if (err) throw err;
+                    console.log(result);
+                    db.close();
+                        });
+                    }
+                });
+            </script>
+            &ensp;
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Kode</th>
+                        <th scope="col">Nama</th>
+                        <th scope="col">Kategori</th>
+                        <th scope="col">Harga</th>
+                        <th scope="col">Stok</th>
+                        <th scope="col">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (pakaians.length === 0) { %>
+                    <tr>
+                        <td colspan="4">
+                            <div class="alert alert-danger fw-bold" role="alert">
+                                Data masih kosong.
                                 </div>
-                          </td>
-                      </tr>
-                  <% } %>
-                  <% pakaians.forEach((pakaian, i) => { i++%>
-                      <tr>
-                          <th scope="row"><%= i++ %> </th>
-                          <td><%= pakaian.kode %> </td>
-                          <td><%= pakaian.nama %> </td>
-                          <td><%= pakaian.harga %> </td>
-                          <td><%= pakaian.stok %> </td>
-                          <td>
-                              <a href="/pakaian/:page/<%= pakaian.kode %> " class="btn btn-success badge rounded-pill"><i class="bi bi-info-circle"></i> detail</a>
-                          </td>
+                        </td>
+                    </tr>
+                <% } %>
+              
+                <% pakaians.forEach((pakaian, i) => { i++%>
+                    <tr>
+                        <th scope="row"><%= i++ %> </th>
+                        <td><%= pakaian.kode %> </td>
+                        <td><%= pakaian.nama %> </td>
+                        <td><%= pakaian.kategori %> </td>
+                        <td><%= pakaian.harga %> </td>
+                        <td><button onclick="myFunction()" class="fa fa-minus rounded-circle bg-secondary"></button>
+                            &nbsp;<%= pakaian.stok %>&nbsp;&nbsp;<button onclick="myFunction()" class="fa fa-plus rounded-circle bg-primary" ></button> </td>
+                            <script>
+                                function myFunction() {
+                                    var stock;
+                                  stock = parseInt(document.getElementById("pakaians.stok").innerHTML);
+                                  document.getElementById("pakaian.stok").innerHTML = ++stock;
+                                }
+                                </script>
+                        <td>
+                            <a href="/pakaian/:page/<%= pakaian.kode %> " class="btn btn-success badge rounded-pill"><i class="bi bi-info-circle"></i> detail</a>
+                        </td>
                         </tr>
-                  <% }) %>
-                  
-              </tbody>
+                <% }) %>
+                
+                </tbody>
             </table>
-      </div>
-  </div>
+    </div>
 </div>
+</div>
+
+
 <% if (pages > 0) { %>
-  <ul class="pagination text-center">
-      <% if (current == 1) { %>
-          <li class="disabled"><a>First</a></li>
-      <% } else { %>
-          <li><a href="/pakaian/1">First</a></li>
-      <% } %>
-      <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
-      <% if (i !== 1) { %>
-          <li class="disabled"><a>...</a></li>
-      <% } %>
-      <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
-          <% if (i == current) { %>
-              <li class="active"><a><%= i %></a></li>
-          <% } else { %>
-              <li><a href="/pakaian/<%= i %>"><%= i %></a></li>
-          <% } %>
-          <% if (i == Number(current) + 4 && i < pages) { %>
-              <li class="disabled"><a>...</a></li>
-          <% } %>
-      <% } %>
-      <% if (current == pages) { %>
-          <li class="disabled"><a>Last</a></li>
-      <% } else { %>
-          <li><a href="/pakaian/<%= pages %>">Last</a></li>
-      <% } %>
-  </ul>
+<ul class="pagination text-center">
+    <% if (current == 1) { %>
+        <li class="disabled"><a>First</a></li>
+        <% } else { %>
+        <li><a href="/pakaian/1">First</a></li>
+    <% } %>
+        <% var i = (Number(current) > 3 ? Number(current) - 2 : 1) %>
+        <% if (i !== 1) { %>
+            <li class="disabled"><a>...</a></li>
+    <% } %>
+        <% for (; i <= (Number(current) + 2) && i <= pages; i++) { %>
+            <% if (i == current) { %>
+                <li class="active"><a><%= i %></a></li>
+            <% } else { %>
+                <li><a href="/pakaian/<%= i %>"><%= i %></a></li>
+            <% } %>
+            <% if (i == Number(current) + 2 && i < pages) { %>
+                <li class="disabled"><a>...</a></li>
+            <% } %>
+        <% } %>
+        <% if (current == pages) { %>
+            <li class="disabled"><a>Last</a></li>
+        <% } else { %>
+            <li><a href="/pakaian/<%= pages %>">Last</a></li>
+        <% } %>
+</ul>
 <% } %>
+</div>
+</div>
+</div>
+</div>
 </div>

@@ -6,7 +6,7 @@
                 <div class="alert alert-danger" role="alert">
                     <ul>
                         <% errors.forEach(error => { %>
-                         <li><%= error.msg %> </li>
+                        <li><%= error.msg %> </li>
                         <% }) %>
                     </ul>
                   </div>
@@ -23,6 +23,10 @@
                   <input type="text" class="form-control" id="nama" name="nama" required value="<%= pakaian.nama %>">
                 </div>
                 <div class="mb-3">
+                  <label for="kategori" class="form-label">Kategori</label>
+                  <input type="text" class="form-control" id="kategori" name="kategori" required value="<%= pakaian.kategori %>">
+                </div>
+                <div class="mb-3">
                   <label for="harga" class="form-label">Harga</label>
                   <input type="text" class="form-control" id="harga" name="harga" required value="<%=pakaian.harga %>">
                 </div>
@@ -30,8 +34,8 @@
                   <label for="stok" class="form-label">Stok</label>
                   <input type="text" class="form-control" id="stok" name="stok" required value="<%= pakaian.stok %>">
                 </div>
-                <button type="submit" class="btn btn-primary">Ubah Data </button>
+                <button type="submit" class="btn btn-white">Ubah Data </button>
               </form>
         </div>
     </div>
-</div>  
+</div>
