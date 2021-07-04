@@ -167,7 +167,23 @@ app.put('/pakaian/:page', [
   }
 });
 
+app.post('/pakaian/search/:page', function(req, res, next){
+  var filterKat = req.body.filterKat;
 
+  if(filterKat !=''){
+    var filterParameter={
+      kategori:filterKat
+    }
+  }
+  var pakaianFilter = Pakaian.find(filterParameter);
+  pakaianFilter.exec(function(err, data){
+    if(err) throw err;
+    res.render('pakaian', 
+    {title: 'pakaian', 
+    layout: 'layouts/main-layout', 
+    pakaians:data});
+  });
+});
 
 app.listen(port, () => {
   console.log(`app listening at http://localhost:${port}`)
