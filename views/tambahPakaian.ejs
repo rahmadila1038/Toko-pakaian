@@ -1,7 +1,6 @@
-<div class="container mt-3">
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Form Tambah Data Pakaian</h2>
+<div class="container mt-3" style="margin-left: 150pt;">
+    <div class="row ">
+        <div class="col-md-8" >
             <% if (typeof errors != 'undefined') { %>
                 <div class="alert alert-danger" role="alert">
                     <ul>
@@ -11,6 +10,11 @@
                     </ul>
                   </div>
             <% } %>
+            <div class="card" style="border: 3px double yellow;">
+              <div class="card-header bg-gradient-pink text-white text-center">
+                Form Tambah Data Pakaian
+              </div>
+              <div class="card-body">
             <form method="POST" action="/pakaian/:page">
               <div class="mb-3">
                 <div class="input-group input-group-merge input-group-alternative">
@@ -37,8 +41,13 @@
                   <input type="number" placeholder="stok" class="form-control" id="stok" name="stok" required>
                   </div>
                 </div>
-                <button type="submit" class="btn btn-secondary">Tambah Data</button>
+                <div class="card-footer bg-gradient-pink text-white text-center">
+                  <button type="submit" class="btn btn-secondary" style="border-radius: 20px; ">Add</button>
+                </div>
+        
               </form>
+            </div>
+          </div>
         </div>
     </div>
 </div>  

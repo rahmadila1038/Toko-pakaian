@@ -44,28 +44,28 @@ app.get('/about', (req, res) => {
     layout:'layouts/main-layout'});
   });
 //tabel
-  app.get('/pakaian/:page',  (req, res, next) => {
-    var perPage = 5
-    var page = req.params.page || 1
+app.get('/pakaian/:page', (req, res, next) => {
+  var perPage = 5
+  var page = req.params.page || 1
 
-    Pakaian
-        .find({})
-        .skip((perPage * page) - perPage)
-        .limit(perPage)
-        .exec(function(err,pakaians) {
-            Pakaian.count().exec(function(err, count) {
-                if (err) return next(err)
-    res.render('pakaian', {
-      title:'Pakaian',
-      layout:'layouts/main-layout',
-      pakaians:pakaians,
-      current: page,
-      pages: Math.ceil(count / perPage),
-      msg: req.flash('msg'),
-    })
-  })
+  Pakaian
+    .find({})
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .exec(function (err, pakaians) {
+      Pakaian.count().exec(function (err, count) {
+        if (err) return next(err)
+        res.render('pakaian', {
+          title: 'Clothes',
+          layout: 'layouts/main-layout',
+          pakaians: pakaians,
+          current: page,
+          pages: Math.ceil(count / perPage),
+          msg: req.flash('msg'),
+        })
+      })
+    });
 });
-  });
 //form tambah data
   app.get('/pakaian/tambah/:page', (req, res) => {
     res.render('tambahPakaian', {
@@ -105,9 +105,9 @@ app.get('/pakaian/:page/:kode', async (req, res) => {
   const pakaian = await Pakaian.findOne({kode: req.params.kode});
 
   res.render('detail', {
-    title: 'Halaman Detail',
+    title: ' Details',
     layout: 'layouts/main-layout',
-    pakaian,
+    pakaian :pakaian,
   });
 });
 
@@ -125,7 +125,7 @@ app.get('/pakaian/edit/:page/:kode', async (req, res) => {
   res.render('ubahPakaian', {
     title: 'Form Ubah Data Pakaian',
     layout: 'layouts/main-layout',
-    pakaian,
+    pakaian:pakaian,
   });
 });
 
@@ -138,7 +138,7 @@ app.put('/pakaian/:page', [
     }
     return true;
   }),
-], 
+],
 (req, res) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()) {
@@ -155,34 +155,65 @@ app.put('/pakaian/:page', [
         $set: {
           kode: req.body.kode,
           nama: req.body.nama,
-          nama: req.body.kategori,
+          kategori: req.body.kategori,
           harga: req.body.harga,
           stok: req.body.stok
         },
       }).then((result) => {
-        //kirimkan flash message
         req.flash('msg', 'Data Pakaian berhasil diubah!');
         res.redirect('/pakaian/:page');
     });
   }
 });
 
-app.post('/pakaian/search/:page', function(req, res, next){
+//filter kategori
+app.post('/pakaian/search/:page', function (req, res, next) {
+  var perPage = 5
+  var page = req.params.page || 1
   var filterKat = req.body.filterKat;
 
-  if(filterKat !=''){
-    var filterParameter={
-      kategori:filterKat
+  if (filterKat != '' ) {
+    var filterParameter = {
+    kategori: filterKat }
     }
-  }
+
   var pakaianFilter = Pakaian.find(filterParameter);
-  pakaianFilter.exec(function(err, data){
-    if(err) throw err;
-    res.render('pakaian', 
-    {title: 'pakaian', 
-    layout: 'layouts/main-layout', 
-    pakaians:data});
-  });
+  Pakaian
+    .find({})
+    .skip((perPage * page) - perPage)
+    .limit(perPage)
+    .exec(function (err, pakaians) {
+      Pakaian.count().exec(function (err, count) {
+        if (err) return next(err)
+        pakaianFilter.exec(function (err, data) {
+          if (err) return next(err);
+          res.render('pakaian',
+            {
+              title: 'Clothes',
+              layout: 'layouts/main-layout',
+              current: page,
+              pages: Math.ceil(count / perPage),
+              msg: req.flash('msg'),
+              pakaians: data
+            });
+        });
+      });
+    });
+});
+
+app.put('/pakaian/stok/:id', (req, res) => {
+  Pakaian.updateOne(
+    { _id: req.body._id },
+    {
+      $set: {
+        kode: req.body.kode,
+        nama: req.body.nama,
+        kategori: req.body.kategori,
+        harga: req.body.harga,
+        stok: req.body.stok
+      },
+    }).then((result) => {
+    });
 });
 
 app.listen(port, () => {

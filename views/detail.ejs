@@ -1,32 +1,34 @@
-<div class="container mt-3">
+<div class="container mt-3" style="margin-left: 250pt;">
   <div class="row">
     <div class="col-md-8">
-      <h2>Detail Pakaian</h2>
       <% if (!pakaian) { %>
         <div class="alert alert-danger fw-bold" role="alert">
           Data Kosong. <br>
           <a href="/pakaian/:page" class="alert-link fw-normal">&laquo; kembali ke daftar pakaian</a>
         </div>
         <% } else { %>
-          <div class="card" style="width: 18rem;">
+          <div class="card " style="width: 20rem;border: 3px double yellow;">
+            <div class="card-header text-center text-white bg-gradient-pink">
+              <h2>Clothes Details</h2>
+            </div>
             <div class="card-body">
-              <h5 class="card-subtitle mb-2 text-muted">Kode :<%= pakaian.kode %>
-              </h5>
-              <h5 class="card-title">Nama :<%= pakaian.nama %>
-              </h5>
-              <p class="card-text">Harga :<%= pakaian.harga %>
+              <h2 class="card-subtitle mb-2 text-muted">Code :<%= pakaian.kode %>
+              </h2>
+              <h2 class="card-title">Name :<%= pakaian.nama %>
+              </h2>
+              <p class="card-text">Price :<%= pakaian.harga %>
               </p>
-              <p class="card-text">Kategori :<%= pakaian.kategori %>
+              <p class="card-text">Category :<%= pakaian.kategori %>
               </p>
-              <p class="card-text">Stok :<%= pakaian.stok %>
+              <p class="card-text">Stock :<%= pakaian.stok %>
               </p>
-              <a href="/pakaian/edit/:page/<%= pakaian.kode %>" class="btn btn-info badge">Ubah</a>
+              <a href="/pakaian/edit/:page/<%= pakaian.kode %>" class="btn btn-info fas fa-edit"></a>
               <form action="/pakaian/:page?_method=DELETE" method="POST" class="d-inline">
                 <input type="hidden" name="kode" value="<%= pakaian.kode %>" />
-                <button type="submit" class="btn btn-danger badge"
-                  onclick="return confirm('Apakah anda yakin');">Hapus</button>
+                <button type="submit" class="btn btn-danger fas fa-trash-alt"
+                  onclick="return confirm('Apakah anda yakin');"></button>
               </form>
-              <a href="/pakaian/:page" class="card-link d-block mt-2">&laquo; Kembali ke daftar pakaian</a>
+              <a href="/pakaian/:page" class="card-link d-block mt-2">&laquo; Back to clothes list</a>
             </div>
           </div>
           <% } %>

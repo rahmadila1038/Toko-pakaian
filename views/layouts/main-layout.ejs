@@ -15,60 +15,52 @@
   <!-- Page plugins -->
   <!-- Argon CSS -->
   <link rel="stylesheet" href="/assets/css/argon.css?v=1.2.0" type="text/css">
+  <link rel="stylesheet" href="/assets/css/bootstrap/bootstrap.min.css" type="text/css">
+
   <title>
     <%= title %>
   </title>
 </head>
 
 <body>
-  <!-- Sidenav -->
-  <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
-    <div class="scrollbar-inner">
-      <!-- Brand -->
-      <div class="sidenav-header  align-items-center">
-        <a class="navbar-brand" href="javascript:void(0)">
-          <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
+
+  <div class="main-content" id="panel">
+    <!-- Topnav -->
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-yellow border-bottom">
+      <div class="container-fluid">
+        <a class="nav-link " href="/">
+          <i class="ni ni-tv-2 text-primary"></i>
+          <span class="nav-link-text">Dashboard</span>
+        </a>
+        <!-- Navbar links -->
+        <ul class="navbar-nav align-items-center  ml-md-auto ">
+          <li class="nav-item">
+            <a class="nav-link" href="/pakaian/:page">
+              <i class="ni ni-bullet-list-67 text-primary"></i>
+              <span class="nav-link-text text-primary">Clohes List</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about">
+              <i class="ni ni-single-02 text-primary"></i>
+              <span class="nav-link-text text-primary">Profile</span>
+            </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
+          <li class="nav-item ">
+
             <div class="media align-items-center">
-              <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" src="../assets/img/theme/icon.jpg">
-              </span>
-              <div class=" ml-2  d-none d-lg-block">
+              <div class="media-body  ml-2  d-none d-lg-block">
                 <span class="mb-0 text-sm  font-weight-bold">DilaStore</span>
               </div>
             </div>
-          </a>
-        </a>
+            </a>
       </div>
-      <div class="navbar-inner">
-        <!-- Collapse -->
-        <div class="collapse navbar-collapse" id="sidenav-collapse-main">
-          <!-- Nav items -->
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="ni ni-tv-2 text-primary"></i>
-                <span class="nav-link-text">Dashboard</span>
-              </a>
-            </li>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/pakaian/:page">
-                <i class="ni ni-bullet-list-67 text-default"></i>
-                <span class="nav-link-text">Tables</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/about">
-                <i class="ni ni-single-02 text-yellow"></i>
-                <span class="nav-link-text">Profile</span>
-              </a>
-            </li>
-          </ul>
-
-        </div>
-      </div>
-    </div>
+      </li>
+      </ul>
+  </div>
+  </div>
   </nav>
   <!-- Main content -->
   <div class="main-content" id="panel">
