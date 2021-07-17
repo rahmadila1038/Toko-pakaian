@@ -32,11 +32,25 @@ app.use(
 );
 app.use(flash());
 
-app.get('/', (req, res) => {
-  res.render('index',{
-    title:'Home',
-    layout:'layouts/main-layout'});
+app.get('/', async(req, res) => {
+  var kategori = await Pakaian.find({}, {kategori:1, _id:0});
+    var tmp = [];
+    for(var i = 0; i < kategori.length; i++){
+      tmp.push(kategori[i]['kategori']);
+    }
+    result = tmp.reduce((total, value) => {
+      total[value] = (total[value] || 0) + 1;
+      return total;
+    }, {});
+
+    res.render('index', {
+      title: 'Home',
+      layout: 'layouts/main-layout',
+      kategori: Object.keys(result),
+      data: Object.values(result),
+    });
   });
+
 
 app.get('/about', (req, res) => {
   res.render('about',{

@@ -4,32 +4,42 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <canvas id="myChart" style="background-color: white; width:30; height:30;"></canvas>
 <script>
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: [ 'Blouse', 'Dress', 'Outer', 'Shirt', 'Skirt','tunic'],
-        datasets: [{
-            label: 'pieces',
-            data: [2, 7, 5, 8, 5, 3],
-            backgroundColor: [
-                'rgb(233, 150, 122)',
-                'rgb(185, 127, 120) ',
-                'rgb(255, 206, 86)',
-                'rgb(233, 208, 165)',
-                'rgb(240,171,128)',
-                'rgb(255, 159, 64) '
-            ],
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var label = '<%= kategori %>';
+    label = label.split(",");
+    var value = '<%= data %>';
+    var value2 = [];
+    value = value.split(",")
+    value.forEach(element => {
+        value2.push(parseInt(element));
+    });
+    
+		var myChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: label,
+				datasets: [{
+					label: 'type',
+					data: value2,
+					backgroundColor:[ 
+                        'rgb(233, 150, 122)',
+                        'rgb(185, 127, 120) ',
+                        'rgb(255, 206, 86)',
+                        'rgb(233, 208, 165)',
+                        'rgb(240,171,128)',
+                        'rgb(255, 159, 64) '],
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero:true
+						}
+					}]
+				}
+			}
+		});
 </script>
  
 </div>

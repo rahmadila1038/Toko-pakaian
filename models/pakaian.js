@@ -12,7 +12,6 @@ const Pakaian = mongoose.model('Pakaian',{
         type: String,
         required: true
     },
-    
     harga: {
         type: Number,
         required: true
